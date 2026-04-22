@@ -1,0 +1,253 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelX - Discover Local Wonders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-wrapper">
+            <div class="navbar-left">
+                <div class="logo-brand">
+                    <i class="fas fa-globe"></i>
+                    <span class="logo-text">TravelX</span>
+                </div>
+            </div>
+
+            <div class="navbar-center">
+                <div class="search-container" onsubmit="return false;">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search temples, food, hidden gems, or districts..."
+                        class="search-input"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                    <button type="button" class="search-btn" id="searchBtn" onclick="return handleSearch();" title="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button type="button" class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch();" title="Clear search" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="navbar-right">
+                <button class="nav-btn" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                {% if user.is_authenticated %}
+                    <button class="nav-btn notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User" class="profile-img">
+                        <div class="profile-menu">
+                            <a href="{% url 'places:profile' %}"><i class="fas fa-user"></i> Profile</a>
+                            <a href="{% url 'places:profile' %}"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="{% url 'places:logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'places:login' %}" class="btn-auth btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{% url 'places:signup' %}" class="btn-auth btn-signup">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="gradient-orbs"></div>
+            <div class="gradient-orbs orb-2"></div>
+            <div class="gradient-orbs orb-3"></div>
+        </div>
+
+        <div class="hero-content">
+            <span class="hero-badge">✨ Discover Amazing Places</span>
+            <h1 class="hero-title">
+                Explore Local 
+                <span class="gradient-text">Wonders</span>
+            </h1>
+            <p class="hero-subtitle">
+                
+            </p>
+            
+            <div class="hero-cta">
+                <button class="btn btn-primary">
+                    <i class="fas fa-map-location-dot"></i> Start Exploring
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORY FILTERS -->
+    <section class="filters-section">
+        <div class="filter-header">
+            <h2>Explore by Category</h2>
+            <p>Choose what interests you most</p>
+        </div>
+
+        <div class="categories">
+            <button class="filter-btn active" onclick="filterCategory('all')" data-filter="all">
+                <span class="filter-icon">✨</span>
+                <span class="filter-text">All Places</span>
+            </button>
+            <button class="filter-btn" onclick="filterCategory('temple')" data-filter="temple">
+                <span class="filter-icon"><i class="fas fa-gopuram"></i></span>
+                <span class="filter-text">Temple</span>
+            </button>
+            <button class="filter-btn" onclick="filterCategory('hidden_spots')" data-filter="hidden_spots">
+                <span class="filter-icon"><i class="fas fa-mountain"></i></span>
+                <span class="filter-text">Hidden Spots</span>
+            </button>
+            <button class="filter-btn" onclick="filterCategory('falls')" data-filter="falls">
+                <span class="filter-icon"><i class="fas fa-water"></i></span>
+                <span class="filter-text">Waterfalls</span>
+            </button>
+            <button class="filter-btn" onclick="filterCategory('food')" data-filter="food">
+                <span class="filter-icon"><i class="fas fa-utensils"></i></span>
+                <span class="filter-text">Food</span>
+            </button>
+        </div>
+
+        <div class="filter-controls">
+            <input type="range" id="priceRange" min="0" max="1000" value="1000" class="range-slider">
+            <select id="sortBy" class="sort-select">
+                <option value="newest">Newest First</option>
+                <option value="popular">Most Popular</option>
+                <option value="rating">Top Rated</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- CARDS GRID -->
+    <section class="cards-section">
+        <div class="container">
+            <div class="cards-grid" id="placesContainer">
+                <!-- Places will be loaded dynamically from API -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>No places found</h3>
+                <p>Try adjusting your filters or try a different search</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About TravelX</h4>
+                <p>Discover authentic local experiences and hidden gems around the world.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Explore</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TravelX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- DETAILS MODAL -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalPlaceName">Place Name</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-detail-item">
+                    <i class="fas fa-tag"></i>
+                    <div>
+                        <div class="modal-detail-label">Category</div>
+                        <div class="modal-detail-value" id="modalCategory">Temple</div>
+                    </div>
+                </div>
+                <div class="modal-detail-item">
+                    <i class="fas fa-map-pin"></i>
+                    <div>
+                        <div class="modal-detail-label">Location</div>
+                        <div class="modal-detail-value" id="modalLocation">Location here</div>
+                    </div>
+                </div>
+                <div class="modal-detail-item">
+                    <i class="fas fa-building"></i>
+                    <div>
+                        <div class="modal-detail-label">City</div>
+                        <div class="modal-detail-value" id="modalCity">City name</div>
+                    </div>
+                </div>
+                <div class="modal-detail-item">
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <div class="modal-detail-label">Rating</div>
+                        <div class="modal-detail-value" id="modalRating">4.8 / 5</div>
+                    </div>
+                </div>
+                <div class="modal-detail-item">
+                    <i class="fas fa-align-left"></i>
+                    <div>
+                        <div class="modal-detail-label">Description</div>
+                        <div class="modal-detail-value" id="modalDescription">Place description goes here</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action btn-primary">
+                    <i class="fas fa-heart"></i> Save
+                </button>
+                <button class="btn-action btn-secondary" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

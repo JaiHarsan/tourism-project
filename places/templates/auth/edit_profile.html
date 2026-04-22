@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - TravelX</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .edit-container {
+            max-width: 700px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .edit-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .edit-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .edit-subtitle {
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+        }
+
+        .form-input:disabled {
+            background-color: #f8fafc;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+
+        .form-group-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .btn-save {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 1rem;
+            background-color: #f8fafc;
+            color: #1f2937;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background-color: #e5e7eb;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        @media (max-width: 600px) {
+            .edit-card {
+                padding: 2rem;
+            }
+
+            .form-group-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .edit-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-wrapper">
+            <div class="navbar-left">
+                <div class="logo-brand">
+                    <i class="fas fa-globe"></i>
+                    <span class="logo-text">TravelX</span>
+                </div>
+            </div>
+
+            <div class="navbar-center">
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search temples, food, hidden gems..."
+                        class="search-input"
+                    >
+                </div>
+            </div>
+
+            <div class="navbar-right">
+                <button class="nav-btn" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                {% if user.is_authenticated %}
+                    <button class="nav-btn notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User" class="profile-img">
+                        <div class="profile-menu">
+                            <a href="{% url 'places:profile' %}"><i class="fas fa-user"></i> Profile</a>
+                            <a href="{% url 'places:profile' %}"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="{% url 'places:logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="edit-container">
+        <div class="edit-card">
+            <div class="edit-header">
+                <h1 class="edit-title">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </h1>
+                <p class="edit-subtitle">Update your personal information</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label" for="username">
+                        <i class="fas fa-at"></i> Username
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        value="{{ user.username }}"
+                        class="form-input"
+                        disabled
+                    >
+                    <small style="color: #6b7280; margin-top: 0.25rem; display: block;">Username cannot be changed</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        value="{{ user.email }}"
+                        class="form-input"
+                        required
+                    >
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label" for="first_name">
+                            <i class="fas fa-person"></i> First Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="first_name" 
+                            name="first_name"
+                            value="{{ user.first_name }}"
+                            class="form-input"
+                            placeholder="Enter first name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="last_name">
+                            <i class="fas fa-person"></i> Last Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="last_name" 
+                            name="last_name"
+                            value="{{ user.last_name }}"
+                            class="form-input"
+                            placeholder="Enter last name"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-calendar-check"></i> Member Since
+                    </label>
+                    <input 
+                        type="text" 
+                        value="{{ user.date_joined|date:'M d, Y' }}"
+                        class="form-input"
+                        disabled
+                    >
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a href="{% url 'places:profile' %}" class="btn-cancel">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
