@@ -10,3 +10,4 @@ from django.contrib import admin
 # class PlaceAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'category', 'city', 'location')
 #     list_filter = ('category', 'city')
+#     search_fields = ('name', 'location')
