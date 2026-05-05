@@ -1,4 +1,4 @@
-from django.contrib import admin
+
 
 # MongoEngine models don't work with Django admin
 # To manage MongoDB documents, use MongoDB Compass or pymongo scripts
