@@ -1,7 +1,7 @@
 
 from mongoengine import Document, StringField, FloatField, ImageField, ObjectIdField, BooleanField, EmailField
 from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class User(Document):
     """MongoDB User model for authentication"""
