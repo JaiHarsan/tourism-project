@@ -9,7 +9,7 @@ class User(Document):
     email = EmailField(required=True, unique=True)
     password = StringField(required=True)  # hashed password
     first_name = StringField(max_length=100, default='')
-    l
+    last_name = StringField(max_length=100, default='')
     is_active = BooleanField(default=True)
     created_at = StringField(default=lambda: datetime.now().isoformat())
     updated_at = StringField(default=lambda: datetime.now().isoformat())
