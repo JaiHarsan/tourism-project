@@ -1,5 +1,5 @@
 /* ========== DOM ELEMENTS ========== */
-
+const searchInput = document.getElementById('searchInput');
 const placesContainer = document.getElementById('placesContainer');
 const emptyState = document.getElementById('emptyState');
 const themeToggle = document.getElementById('themeToggle');
