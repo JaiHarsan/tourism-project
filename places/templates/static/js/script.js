@@ -5,7 +5,7 @@ const emptyState = document.getElementById('emptyState');
 const themeToggle = document.getElementById('themeToggle');
 const priceRange = document.getElementById('priceRange');
 const sortBy = document.getElementById('sortBy');
-const filterBtns = document.querySelectorAll('.filter-btn');
+
 
 let allCards = [];
 let currentFilter = 'all';
