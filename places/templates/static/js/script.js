@@ -15,7 +15,7 @@ let currentSort = 'newest';
 document.addEventListener('DOMContentLoaded', () => {
     allCards = document.querySelectorAll('.card-wrapper');
     
-    // Add event listeners to filter buttons
+   
     filterBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const filter = btn.getAttribute('data-filter');
