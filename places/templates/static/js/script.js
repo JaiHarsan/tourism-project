@@ -11,7 +11,7 @@ let allCards = [];
 let currentFilter = 'all';
 let currentSort = 'newest';
 
-/* ========== INITIALIZE ========== */
+
 document.addEventListener('DOMContentLoaded', () => {
     allCards = document.querySelectorAll('.card-wrapper');
     
