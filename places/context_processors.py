@@ -6,7 +6,7 @@ def user_context(request):
     Custom context processor to add MongoDB user to template context.
     This ensures proper authentication checks in templates.
     """
-    
+    context = {}
     
     # Check if user_id is in session (custom authentication)
     if 'user_id' in request.session:
