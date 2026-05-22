@@ -9,6 +9,7 @@ const sortBy = document.getElementById('sortBy');
 
 let allCards = [];
 let currentFilter = 'all';
+let currentSort = 'newest';
 
 
 document.addEventListener('DOMContentLoaded', () => {
