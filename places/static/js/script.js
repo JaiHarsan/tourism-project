@@ -6,7 +6,9 @@ const emptyState = document.getElementById('emptyState');
 const themeToggle = document.getElementById('themeToggle');
 const filterBtns = document.querySelectorAll('.filter-btn:not(.city-filter)');
 
-
+let currentFilter = 'all';
+let currentSearch = '';
+let isSearching = false;
 
 /* ========== HANDLE SEARCH ========== */
 function handleSearch() {
