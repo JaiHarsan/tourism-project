@@ -5,10 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('places', '0002_place_category_place_city'),
-    ]
-
+    
     operations = [
         migrations.AddField(
             model_name='place',
