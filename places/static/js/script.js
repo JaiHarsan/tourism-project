@@ -1,4 +1,4 @@
-/* ========== DOM ELEMENTS ========== */
+
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const placesContainer = document.getElementById('placesContainer');
@@ -10,7 +10,7 @@ let currentFilter = 'all';
 let currentSearch = '';
 let isSearching = false;
 
-/* ========== HANDLE SEARCH ========== */
+
 function handleSearch() {
     if (searchInput && !isSearching) {
         currentSearch = searchInput.value.toLowerCase().trim();
