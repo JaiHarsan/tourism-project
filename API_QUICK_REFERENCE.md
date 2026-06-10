@@ -7,7 +7,7 @@ http://localhost:8000
 
 ---
 
-## Endpoints Overview
+
 
 ### 1. **Search Places** (General)
 ```
