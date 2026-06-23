@@ -160,7 +160,7 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 
 ## 📧 Contact
 
-* GitHub: https://github.com/yourusername
+* email : jaiharsan.s2008@gmail.com
 
 ---
 
