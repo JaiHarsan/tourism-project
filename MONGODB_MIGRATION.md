@@ -8,7 +8,7 @@ Your Digital Local Tourism Platform has been successfully migrated from SQLite t
 ### 1. **Installed MongoDB Support**
    - Installed `mongoengine` - MongoDB ODM (Object Document Mapper) for Python
    - Installed `mongo-connector` - MongoDB connection utilities
-   - Installed `sqlalchemy` - SQL database toolkit
+   
 
 ### 2. **Updated Django Configuration**
    - Modified `tourism_platform/settings.py` to connect to MongoDB
