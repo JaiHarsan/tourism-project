@@ -1,12 +1,8 @@
 /* ========== DOM ELEMENTS ========== */
 const searchInput = document.getElementById('searchInput');
-const placesContainer = document.getElementById('placesContainer');
-const emptyState = document.getElementById('emptyState');
-const themeToggle = document.getElementById('themeToggle');
-const priceRange = document.getElementById('priceRange');
-const sortBy = document.getElementById('sortBy');
 
 
+ 
 let allCards = [];
 let currentFilter = 'all';
 let currentSort = 'newest';
